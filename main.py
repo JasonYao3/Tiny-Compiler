@@ -1,5 +1,7 @@
 from lexer import *
+from emitter import *
 from tiny_parser import *
+import sys
 
 
 def main():
@@ -10,10 +12,14 @@ def main():
     with open(sys.argv[1], "r") as inputFile:
         source = inputFile.read()
 
+    # Initialize the lexer, emitter, and parser.
     lexer = Lexer(source)
-    parser = Parser(lexer)
+    emitter = Emitter("out.c")
+    parser = Parser(lexer, emitter)
 
-    parser.program()
+    parser.program()  # Start the parser.
+    emitter.writeFile()  # Write the output to file.
     print("Parsing completed.")
+
 
 main()
